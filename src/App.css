@@ -5,9 +5,13 @@
 .form {
   display: flex;
   justify-content: center;
-  align-content: center
+  align-items: center;
+  flex-direction: column
 }
 
+.active {
+  font-weight: bold
+}
 
 
 /* .App-logo {

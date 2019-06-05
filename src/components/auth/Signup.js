@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { SIGNUP } from "../../mutation/index";
 import Error from "../Error";
@@ -24,8 +24,9 @@ class Signup extends Component {
   handleSubmit = async (e, createUser) => {
     e.preventDefault();
     const response = await createUser();
-    const { data } = response
-    localStorage.setItem('token', data.createUser.token)
+    const { data } = response;
+    localStorage.setItem("token", data.createUser.token);
+    await this.props.refetch()
     // this.clearState();
     // this.props.history.push('/')
   };
@@ -46,13 +47,12 @@ class Signup extends Component {
 
     return (
       <div className="App">
-        <h2 className="App"> Signup</h2>
+        <h2 className="App"> Signup </h2>
 
         <Mutation mutation={SIGNUP} variables={{ data }}>
           {(createUser, { data, loading, error }) => {
-            
             if (data && !loading) {
-                return <Redirect to="/" /> 
+              return <Redirect to="/" />;
             }
             return (
               <form

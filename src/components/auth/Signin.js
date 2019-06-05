@@ -34,7 +34,7 @@ class Signin extends Component {
     console.log(this.props)
     await this.props.refetch()
     // this.clearState() // not necessary
-    this.props.history.push('/')
+    // this.props.history.push('/')
   };
 
   render() {

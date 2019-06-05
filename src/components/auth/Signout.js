@@ -1,0 +1,19 @@
+import React from "react";
+import { ApolloConsumer } from "react-apollo";
+import { Redirect } from "react-router-dom";
+
+const handleClick = client => {
+  localStorage.removeItem("token");
+  client.resetStore();
+  return <Redirect to="/"/>
+};
+
+const Signout = () => (
+  <ApolloConsumer>
+    {client => {
+      return <button onClick={() => handleClick(client)}> Signout </button>;
+    }}
+  </ApolloConsumer>
+);
+
+export { Signout as default };
