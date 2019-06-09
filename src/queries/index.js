@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from "apollo-boost";
 
 export const GET_ME = gql`
   query {
@@ -9,7 +9,7 @@ export const GET_ME = gql`
       password
     }
   }
-`
+`;
 
 export const GET_USERS = gql`
   query {
@@ -19,4 +19,28 @@ export const GET_USERS = gql`
       email
     }
   }
-`
+`;
+
+export const GET_POSTS = gql`
+  query($query: String!) {
+    posts(query: $query) {
+      id
+      title
+      body
+      published
+      disabled
+    }
+  }
+`;
+
+export const GET_POST = gql`
+  query($id: ID!) {
+    post(id: $id) {
+      id
+      title
+      body
+      disabled
+    }
+  }
+`;
+

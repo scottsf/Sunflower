@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { Component, Fragment } from "react";
 
-const Search = () => (
-    <div>Search</div>
-)
+class Search extends Component {
+  state = {
+    search: ""
+  };
 
-export { Search as default }
+  handleSearch = (e) => {
+      const { value } = e.target
+      this.setState({ search: value })
+      this.props.handleSearch(this.state.search)
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <input
+          onChange={this.handleSearch}
+        />
+      </Fragment>
+    );
+  }
+}
+
+export { Search as default };

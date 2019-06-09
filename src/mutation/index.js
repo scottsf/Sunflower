@@ -23,3 +23,15 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const CREATE_POST = gql`
+  mutation($data: createPostInput!) {
+    createPost(data: $data) {
+      id
+      title
+      body
+      disabled
+      published
+    }
+  }
+`;

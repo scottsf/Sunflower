@@ -3,7 +3,7 @@ import { ApolloConsumer } from "react-apollo";
 import { Redirect } from "react-router-dom";
 
 const handleClick = client => {
-  localStorage.removeItem("token");
+  localStorage.setItem('token', '');
   client.resetStore();
   return <Redirect to="/"/>
 };

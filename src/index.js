@@ -9,9 +9,10 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Signin from "./components/auth/Signin";
 import Signup from "./components/auth/Signup";
 import Navbar from "./components/Navbar";
-import Search from './components/blog/Search'
-import AddPost from './components/blog/AddPost'
-import Profile from './components/blog/Profile'
+import Search from "./components/blog/Search";
+import AddPost from "./components/blog/AddPost";
+import Profile from "./components/blog/Profile";
+import PostPage from "./components/blog/PostPage";
 import withSession from "./components/withSession";
 import Me from "./components/auth/Me";
 
@@ -42,13 +43,13 @@ const client = new ApolloBoost({
 // console.log(client.fetchOptions)
 // console.log(client.request)
 
-const Root = ({ refetch, session}) => (
+const Root = ({ refetch, session }) => (
   <BrowserRouter>
     <Fragment>
-      <Navbar session={session}/>
+      <Navbar session={session} />
       <Switch>
         <Route path="/" component={App} exact />
-        <Route path="/search" component={Search}  />
+        <Route path="/search" component={Search} />
         <Route
           path="/signin"
           render={props => <Signin refetch={refetch} {...props} />}
@@ -57,9 +58,13 @@ const Root = ({ refetch, session}) => (
           path="/signup"
           render={props => <Signup refetch={refetch} {...props} />}
         />
-        <Route path="/post/add" component={AddPost} />
+        <Route
+          path="/post/add"
+          render={props => <AddPost refetch={refetch} session={session} {...props} />}
+        />
+        <Route path="/post/:id" component={PostPage} />
         <Route path="/profile" component={Profile} />
-        
+
         <Route path="/me" component={Me} />
         <Redirect to="/" />
       </Switch>
