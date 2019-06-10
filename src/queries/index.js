@@ -7,6 +7,8 @@ export const GET_ME = gql`
       name
       email
       password
+      createdAt
+    
     }
   }
 `;
@@ -43,4 +45,5 @@ export const GET_POST = gql`
     }
   }
 `;
+
 

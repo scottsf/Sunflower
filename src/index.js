@@ -11,8 +11,8 @@ import Signup from "./components/auth/Signup";
 import Navbar from "./components/Navbar";
 import Search from "./components/blog/Search";
 import AddPost from "./components/blog/AddPost";
-import Profile from "./components/blog/Profile";
 import PostPage from "./components/blog/PostPage";
+import Profile from "./components/profile/Profile";
 import withSession from "./components/withSession";
 import Me from "./components/auth/Me";
 
@@ -63,7 +63,9 @@ const Root = ({ refetch, session }) => (
           render={props => <AddPost refetch={refetch} session={session} {...props} />}
         />
         <Route path="/post/:id" component={PostPage} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" 
+          render={props => <Profile session={session} />}
+        />
 
         <Route path="/me" component={Me} />
         <Redirect to="/" />
