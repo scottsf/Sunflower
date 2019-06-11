@@ -14,7 +14,7 @@ export const GET_ME = gql`
         body
         published
         disabled
-      } 
+      }
     }
   }
 `;
@@ -52,4 +52,12 @@ export const GET_POST = gql`
   }
 `;
 
-
+export const GET_MY_POSTS = gql`
+  query($search: String!) {
+    myPosts(query: $search) {
+      id
+      title
+      body
+    }
+  }
+`;
