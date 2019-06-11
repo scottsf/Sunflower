@@ -8,7 +8,13 @@ export const GET_ME = gql`
       email
       password
       createdAt
-    
+      likes {
+        id
+        title
+        body
+        published
+        disabled
+      } 
     }
   }
 `;
