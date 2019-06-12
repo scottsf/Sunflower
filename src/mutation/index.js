@@ -35,3 +35,13 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation($id: String!){ 
+    deletePost(id: $id) {
+      id
+      title
+      published
+    }
+  }
+`;
