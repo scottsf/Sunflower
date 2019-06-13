@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { CREATE_POST } from "../../mutation/index";
-import { Redirect } from 'react-router-dom'
-import { GET_POSTS } from '../../queries/index'
+import { Redirect } from "react-router-dom";
+import { GET_POSTS, GET_MY_POSTS } from "../../queries/index";
 
 const initialState = {
   title: "",
@@ -22,26 +22,37 @@ class AddPost extends Component {
   handleSubmit = async (e, createPost) => {
     e.preventDefault();
     await createPost();
-    await this.props.refetch()
+    await this.props.refetch();
   };
 
   render() {
     return (
-      <Mutation className="form" mutation={CREATE_POST} variables={{ data: { ...this.state }}}    
-      update={(cache, { data: { createPost } }) => {
-        const { posts } = cache.readQuery({ query: GET_POSTS });
-        console.log('from cache ', posts)
-        console.log('from data ', createPost)
-        cache.writeQuery({
-          query: GET_POSTS,
-          data: { posts: [posts, ...createPost] }
-        });
-      }}>
+      <Mutation
+        className="form"
+        mutation={CREATE_POST}
+        variables={{ data: { ...this.state } }}
+        refetchQueries={() => [
+          {
+            query: GET_MY_POSTS,
+            variables: { search: "" }
+          }
+        ]}
+        update={(cache, { data: { createPost } }) => {
+          const { posts } = cache.readQuery({ query: GET_POSTS, variables: { query: "" }});
+          console.log("from cache ", posts);
+          console.log("from data ", createPost);
+          cache.writeQuery({
+            query: GET_POSTS,
+            variables: { query: "" },
+            data: { posts: [...posts, createPost] }
+          });
+        }}
+      >
         {(createPost, { data, loading, error }) => {
-          console.log(data)
-           if (data && !loading) return <Redirect to="/" /> 
+          console.log(data);
+          if (data && !loading) return <Redirect to="/" />;
           return (
-            <form onSubmit={(e) => this.handleSubmit(e, createPost)}>
+            <form onSubmit={e => this.handleSubmit(e, createPost)}>
               <input
                 type="text"
                 name="title"
@@ -78,7 +89,10 @@ class AddPost extends Component {
                   }))
                 }
               />
-              <button type="submit" className="button-primary"> Submit </button>
+              <button type="submit" className="button-primary">
+                {" "}
+                Submit{" "}
+              </button>
             </form>
           );
         }}

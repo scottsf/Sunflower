@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
-import { GET_MY_POSTS } from "../../queries/index";
+import { GET_MY_POSTS, GET_POSTS, GET_ME } from "../../queries/index";
 import { DELETE_POST } from "../../mutation/index";
 import Post from "../blog/Post";
 
@@ -24,30 +24,34 @@ const UserPosts = () => (
               <Fragment key={post.id}>
                 <Post key={post.id} {...post} />
                 <p className={{ marginBottom: "0" }}>likes</p>>
-                <Mutation 
-                    mutation={DELETE_POST} 
-                    variables={{id: post.id}}
-                    update={(cache, { data: { deletePost }} ) => {
-                        const { myPosts } = cache.readQuery({
-                            query: GET_MY_POSTS,
-                            variables: { search: ""}
-                        });
+                <Mutation
+                  mutation={DELETE_POST}
+                  variables={{ id: post.id }}
+                  refetchQueries={() => [
+                    { query: GET_POSTS, variables: { query: "" } }, 
+                    { query: GET_ME }
+                  ]}
+                  update={(cache, { data: { deletePost } }) => {
+                    const { myPosts } = cache.readQuery({
+                      query: GET_MY_POSTS,
+                      variables: { search: "" }
+                    });
 
-                        console.log('From cache: ', myPosts)
-                        console.log('From data: ', deletePost)
+                    console.log("From cache: ", myPosts);
+                    console.log("From data: ", deletePost);
 
-                        cache.writeQuery({
-                            query: GET_MY_POSTS,
-                            variables: {search: ""},
-                            data: {
-                                myPosts: myPosts.filter(myPost => 
-                                    myPost.id !== deletePost.id  
-                                )
-                            }
-                        })
-                    }} 
-                    >
-                  {(deletePost, attrs={})=> (
+                    cache.writeQuery({
+                      query: GET_MY_POSTS,
+                      variables: { search: "" },
+                      data: {
+                        myPosts: myPosts.filter(
+                          myPost => myPost.id !== deletePost.id
+                        )
+                      }
+                    });
+                  }}
+                >
+                  {(deletePost, attrs = {}) => (
                     <button
                       className="delete-button"
                       onClick={() => handleClick(deletePost)}
