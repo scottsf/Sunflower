@@ -37,11 +37,22 @@ export const CREATE_POST = gql`
 `;
 
 export const DELETE_POST = gql`
-  mutation($id: String!){ 
+  mutation($id: String!) {
     deletePost(id: $id) {
       id
       title
       published
+    }
+  }
+`;
+
+export const LIKE_POST = gql`
+  mutation($id: ID!, $like: Boolean!) {
+    likePost(id: $id, like: $like) {
+      id
+      likedBy {
+        name
+      }
     }
   }
 `;

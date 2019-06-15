@@ -60,10 +60,19 @@ const Root = ({ refetch, session }) => (
         />
         <Route
           path="/post/add"
-          render={props => <AddPost refetch={refetch} session={session} {...props} />}
+          render={props => (
+            <AddPost refetch={refetch} session={session} {...props} />
+          )}
         />
-        <Route path="/post/:id" component={PostPage} />
-        <Route path="/profile" 
+        <Route
+          path="/post/:id"
+          render={props => (
+            <PostPage refetch={refetch} session={session} {...props} />
+          )}
+        />
+
+        <Route
+          path="/profile"
           render={props => <Profile session={session} />}
         />
 
