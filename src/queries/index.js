@@ -14,6 +14,10 @@ export const GET_ME = gql`
         body
         published
         disabled
+        # likedBy {
+        #   id
+        # }
+        totalLikes
       }
     }
   }
@@ -37,6 +41,10 @@ export const GET_POSTS = gql`
       body
       published
       disabled
+      # likedBy {
+      #   id
+      # }
+      totalLikes
     }
   }
 `;
@@ -48,6 +56,10 @@ export const GET_POST = gql`
       title
       body
       disabled
+      # likedBy {
+      #   id
+      # }
+      totalLikes
     }
   }
 `;
@@ -58,6 +70,10 @@ export const GET_MY_POSTS = gql`
       id
       title
       body
+      # likedBy {
+      #   id
+      # }
+      totalLikes
     }
   }
 `;

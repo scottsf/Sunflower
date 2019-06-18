@@ -15,6 +15,7 @@ class Posts extends Component {
         <Query query={GET_POSTS} variables={{ query: this.state.search }}>
           {({ loading, error, data }) => {
             if (loading) return <div>Loading ...</div>;
+            console.log(data)
             return (
               <ul>
                 {data.posts.map(post => (
