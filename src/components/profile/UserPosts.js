@@ -16,6 +16,7 @@ const UserPosts = () => (
     {({ loading, data, error }) => {
       if (loading) return "Loading ...";
       if (error) return `Error ${Error}`;
+      console.log('DATA :', data)
       return (
         <ul>
           <h4>My posts</h4>
@@ -23,12 +24,12 @@ const UserPosts = () => (
             data.myPosts.map(post => (
               <Fragment key={post.id}>
                 <Post key={post.id} {...post} />
-                <p className={{ marginBottom: "0" }}>likes</p>>
+                <p className={{ marginBottom: "0" }}>likes: { post.totalLikes }</p>
                 <Mutation
                   mutation={DELETE_POST}
                   variables={{ id: post.id }}
                   refetchQueries={() => [
-                    { query: GET_POSTS, variables: { query: "" } }, 
+                    { query: GET_POSTS, variables: { query: "" } },
                     { query: GET_ME }
                   ]}
                   update={(cache, { data: { deletePost } }) => {

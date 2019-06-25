@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { LIKE_POST } from "../../mutation/index";
-import { GET_POSTS, GET_POST, GET_ME, GET_MY_POSTS } from "../../queries/index"
+import { GET_POST } from "../../queries/index"
 
 class LikePost extends Component {
   state = {

@@ -11,7 +11,7 @@ const handleClick = client => {
 const Signout = () => (
   <ApolloConsumer>
     {client => {
-      return <button onClick={() => handleClick(client)}> Signout </button>;
+      return <button className="signout button-primary" onClick={() => handleClick(client)}> Signout </button>;
     }}
   </ApolloConsumer>
 );

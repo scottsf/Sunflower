@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 export const SIGNIN = gql`
   mutation($email: String!, $password: String!) {
@@ -50,6 +50,7 @@ export const LIKE_POST = gql`
   mutation($id: ID!, $like: Boolean!) {
     likePost(id: $id, like: $like) {
       id
+      totalLikes
       likedBy {
         name
       }

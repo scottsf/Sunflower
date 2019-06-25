@@ -3,10 +3,13 @@ import { Mutation } from "react-apollo";
 import { CREATE_POST } from "../../mutation/index";
 import { Redirect } from "react-router-dom";
 import { GET_POSTS, GET_MY_POSTS } from "../../queries/index";
+import {Image, CloudinaryContext} from 'cloudinary-react';
+import cloudinary from 'cloudinary-core'
 
 const initialState = {
   title: "",
   body: "",
+  image: "",
   published: true,
   disabled: false
 };
@@ -19,6 +22,36 @@ class AddPost extends Component {
     this.setState({ [name]: value });
   };
 
+  uploadImage = (e) => { 
+    // const file = e.target.files[0]
+    // this.setState({
+    //   [e.target.name]: file.name
+    // })
+
+    const reader = new FileReader()
+          , file = e.target.files[0]
+          , _this = this
+
+    reader.onload = photo => {
+      this.setState({
+        image: photo.target.result
+      })
+    }
+
+    reader.readAsDataURL(file)
+
+    
+    // const file = e.target.files[0]
+    // let reader = new FileReader()
+    // reader.onload = function (e) {
+    //   console.log(e.target.result)
+    // }
+    // this.setState({
+    //   [e.target.name]: file.name
+    // })
+    // reader.readAsDataURL(file)
+  }
+
   handleSubmit = async (e, createPost) => {
     e.preventDefault();
     await createPost();
@@ -26,6 +59,7 @@ class AddPost extends Component {
   };
 
   render() {
+    console.log(this.state.image)
     return (
       <Mutation
         className="form"
@@ -66,6 +100,15 @@ class AddPost extends Component {
                 value={this.state.body}
                 placeholder="body"
                 onChange={this.handleInput}
+              />
+              <input
+                type="file"
+                name="image"
+                // value={this.state.image}
+                placeholder="image"
+                accept="image/png, image/jpeg"
+                onChange={this.uploadImage}
+                style={{height: '200px'}}
               />
               <input
                 type="checkbox"

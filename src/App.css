@@ -1,5 +1,51 @@
+.Page {
+  padding: 0 10% 0 10%
+}
+
 .App {
   text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5em;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 0.5em 0 0.5em 0
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.signout {
+  margin-left: 12em;
+}
+
+.card {
+  background-image: url('https://images.unsplash.com/photo-1560775664-5010c750aeed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80');
+  height: auto;
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+li {
+  margin-bottom: 0;
+  list-style-type: none
+}
+
+button {
+  margin: 0
 }
 
 .form {

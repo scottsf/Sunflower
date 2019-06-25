@@ -1,14 +1,23 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import Signout from './auth/Signout'
+import Signout from "./auth/Signout";
 
 const Navbar = ({ session }) => (
-  <nav>{session && session.me ? <NavbarAuth session={session} /> : <NavbarUnAuth />}</nav>
+  <nav>
+    {session && session.me ? (
+      <NavbarAuth session={session} />
+    ) : (
+      <NavbarUnAuth />
+    )}
+  </nav>
 );
 
 const NavbarAuth = ({ session }) => (
   <Fragment>
-    <ul>
+      <h2>
+        Welcome <strong>{session.me.name}</strong>
+      </h2>
+    <ul className="navbar">
       <li>
         <NavLink to="/" exact>
           Home
@@ -24,9 +33,8 @@ const NavbarAuth = ({ session }) => (
         <NavLink to="/profile">Profile</NavLink>
       </li>
       <li>
-          <Signout />
+        <Signout />
       </li>
-          <h2> Welcome <strong>{ session.me.name }</strong></h2>
     </ul>
   </Fragment>
 );

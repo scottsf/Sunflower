@@ -11,13 +11,13 @@ class Posts extends Component {
   render() {
     return (
       <Fragment>
-        <input onChange={e => this.setState({ search: e.target.value })} />
+        <input placeholder="Search post" onChange={e => this.setState({ search: e.target.value })} />
         <Query query={GET_POSTS} variables={{ query: this.state.search }}>
           {({ loading, error, data }) => {
             if (loading) return <div>Loading ...</div>;
             console.log(data)
             return (
-              <ul>
+              <ul className="posts">
                 {data.posts.map(post => (
                   <Post key={post.id} {...post} />
                 ))}
