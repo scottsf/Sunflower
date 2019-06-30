@@ -6,7 +6,6 @@ import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from "react-apollo";
 // import ApolloBoost from "apollo-boost";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { createUploadLink } from "apollo-upload-client";
 import Signin from "./components/auth/Signin";
 import Signup from "./components/auth/Signup";
 import Navbar from "./components/Navbar";
@@ -23,6 +22,7 @@ import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 import { withClientState } from "apollo-link-state";
 import { ApolloLink, Observable } from "apollo-link";
+import { createUploadLink } from 'apollo-upload-client'
 
 // Migrated APOLLO-BOOST to APOLLO-CLIENT manually
 const cache = new InMemoryCache();
@@ -82,10 +82,11 @@ const client = new ApolloClient({
       },
       cache
     }),
-    new HttpLink({
-      uri: "http://localhost:4001/graphql",
-      credentials: "same-origin"
-    })
+    // new HttpLink({
+    //   uri: "http://localhost:4001/graphql",
+    //   credentials: "same-origin"
+    // }),
+    createUploadLink({ uri: "http://localhost:4001/graphql" })
   ]),
   cache
 });

@@ -3,8 +3,7 @@ import { Mutation } from "react-apollo";
 import { CREATE_POST } from "../../mutation/index";
 import { Redirect } from "react-router-dom";
 import { GET_POSTS, GET_MY_POSTS } from "../../queries/index";
-import {Image, CloudinaryContext} from 'cloudinary-react';
-import cloudinary from 'cloudinary-core'
+import { UPLOAD_FILE } from "../../mutation/index";
 
 const initialState = {
   title: "",
@@ -22,35 +21,12 @@ class AddPost extends Component {
     this.setState({ [name]: value });
   };
 
-  uploadImage = (e) => { 
-    // const file = e.target.files[0]
-    // this.setState({
-    //   [e.target.name]: file.name
-    // })
-
-    const reader = new FileReader()
-          , file = e.target.files[0]
-          , _this = this
-
-    reader.onload = photo => {
-      this.setState({
-        image: photo.target.result
-      })
-    }
-
-    reader.readAsDataURL(file)
-
-    
-    // const file = e.target.files[0]
-    // let reader = new FileReader()
-    // reader.onload = function (e) {
-    //   console.log(e.target.result)
-    // }
-    // this.setState({
-    //   [e.target.name]: file.name
-    // })
-    // reader.readAsDataURL(file)
-  }
+  uploadImage = async (file, uploadFile) => {
+    const res = await uploadFile({ variables: { file } });
+    const image = res.data.uploadFile.filepath
+    console.log(image)
+    this.setState({ image });
+  };
 
   handleSubmit = async (e, createPost) => {
     e.preventDefault();
@@ -59,7 +35,6 @@ class AddPost extends Component {
   };
 
   render() {
-    console.log(this.state.image)
     return (
       <Mutation
         className="form"
@@ -72,9 +47,11 @@ class AddPost extends Component {
           }
         ]}
         update={(cache, { data: { createPost } }) => {
-          const { posts } = cache.readQuery({ query: GET_POSTS, variables: { query: "" }});
-          console.log("from cache ", posts);
-          console.log("from data ", createPost);
+          const { posts } = cache.readQuery({
+            query: GET_POSTS,
+            variables: { query: "" }
+          });
+          
           cache.writeQuery({
             query: GET_POSTS,
             variables: { query: "" },
@@ -101,15 +78,25 @@ class AddPost extends Component {
                 placeholder="body"
                 onChange={this.handleInput}
               />
-              <input
-                type="file"
-                name="image"
-                // value={this.state.image}
-                placeholder="image"
-                accept="image/png, image/jpeg"
-                onChange={this.uploadImage}
-                style={{height: '200px'}}
-              />
+              <Mutation mutation={UPLOAD_FILE}>
+                {(uploadFile, { loading, error, data }) => {
+                  return (
+                    <input
+                      type="file"
+                      required
+                      placeholder="image"
+                      accept="image/png, image/jpeg"
+                      style={{ height: "200px" }}
+                      onChange={({
+                        target: {
+                          validity,
+                          files: [file]
+                        }
+                      }) => validity.valid && this.uploadImage(file, uploadFile)}
+                    />
+                  );
+                }}
+              </Mutation>
               <input
                 type="checkbox"
                 name="published"
@@ -133,8 +120,7 @@ class AddPost extends Component {
                 }
               />
               <button type="submit" className="button-primary">
-                {" "}
-                Submit{" "}
+                Submit
               </button>
             </form>
           );

@@ -12,6 +12,7 @@ export const GET_ME = gql`
         id
         title
         body
+        image
         published
         disabled
         # likedBy {
@@ -39,6 +40,7 @@ export const GET_POSTS = gql`
       id
       title
       body
+      image
       published
       disabled
       # likedBy {
@@ -55,6 +57,7 @@ export const GET_POST = gql`
       id
       title
       body
+      image
       disabled
       # likedBy {
       #   id
@@ -70,6 +73,7 @@ export const GET_MY_POSTS = gql`
       id
       title
       body
+      image
       # likedBy {
       #   id
       # }
