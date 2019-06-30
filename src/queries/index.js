@@ -1,4 +1,4 @@
-import  gql  from "graphql-tag";
+import gql from "graphql-tag";
 
 export const GET_ME = gql`
   query {
@@ -63,6 +63,10 @@ export const GET_POST = gql`
       #   id
       # }
       totalLikes
+      comments {
+        id
+        text
+      }
     }
   }
 `;
@@ -78,6 +82,16 @@ export const GET_MY_POSTS = gql`
       #   id
       # }
       totalLikes
+    }
+  }
+`;
+
+export const GET_COMMENTS = gql`
+  query($query: String) {
+    comments(query: $query) {
+      id
+      text
+
     }
   }
 `;

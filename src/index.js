@@ -14,7 +14,6 @@ import AddPost from "./components/blog/AddPost";
 import PostPage from "./components/blog/PostPage";
 import Profile from "./components/profile/Profile";
 import withSession from "./components/withSession";
-import Me from "./components/auth/Me";
 
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -152,7 +151,6 @@ const Root = ({ refetch, session }) => (
           render={props => <Profile session={session} />}
         />
 
-        <Route path="/me" component={Me} />
         <Redirect to="/" />
       </Switch>
     </div>
