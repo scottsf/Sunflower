@@ -66,3 +66,13 @@ export const UPLOAD_FILE = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation($data: createCommentInput!) {
+    createComment(data: $data) {
+      id
+      text
+    }
+  }
+
+` 

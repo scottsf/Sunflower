@@ -6,11 +6,11 @@ import Comments from "./comments/Comments"
 
 const PostPage = props => {
   const { id } = props.match.params;
+  
   return (
     <Query query={GET_POST} variables={{ id }}>
       {({ loading, error, data }) => {
         const { post } = data;
-        console.log(post);
         if (loading) return "Loading ...";
         if (error) return `Error ${error}`;
 
@@ -25,7 +25,7 @@ const PostPage = props => {
             />
             <p>Likes: {post.totalLikes}</p>
             <LikePost postId={post.id} {...props} />
-            <Comments postId={post.id} />
+            <Comments postId={post.id} refetch={props.refetch} />
           </Fragment>
         );
       }}

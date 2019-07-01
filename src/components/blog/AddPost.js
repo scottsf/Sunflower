@@ -24,7 +24,6 @@ class AddPost extends Component {
   uploadImage = async (file, uploadFile) => {
     const res = await uploadFile({ variables: { file } });
     const image = res.data.uploadFile.filepath
-    console.log(image)
     this.setState({ image });
   };
 
@@ -51,7 +50,7 @@ class AddPost extends Component {
             query: GET_POSTS,
             variables: { query: "" }
           });
-          
+
           cache.writeQuery({
             query: GET_POSTS,
             variables: { query: "" },

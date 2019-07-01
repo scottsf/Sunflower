@@ -1,17 +1,22 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Query } from "react-apollo";
-import { GET_POST } from "../../../queries";
+import { GET_COMMENTS } from "../../../queries";
+import Comment from "./Comment";
+import CreateComment from "./CreateComment";
 
-const Comments = ({ postId }) => (
-  <Query query={ GET_POST } variables={{ id: postId }}>
+const Comments = ({ postId, refetch }) => (
+  <Query query={GET_COMMENTS} variables={{ post_id: postId }}>
     {({ data, loading, error }) => {
       if (loading) return "Loading";
       return (
-        <ul>
-          {data.post.comments.map(comment => (
-              <li key={comment.id}>{comment.text}</li>
-          ))}
-        </ul>
+        <Fragment>
+          <CreateComment postId={postId} refetch={refetch}/>
+          <ul>
+            {data.comments.map(comment => (
+              <Comment key={comment.id} {...comment} />
+            ))}
+          </ul>
+        </Fragment>
       );
     }}
   </Query>

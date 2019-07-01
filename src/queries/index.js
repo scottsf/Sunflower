@@ -87,11 +87,10 @@ export const GET_MY_POSTS = gql`
 `;
 
 export const GET_COMMENTS = gql`
-  query($query: String) {
-    comments(query: $query) {
+  query($post_id: ID, $query: String) {
+    comments(post_id: $post_id, query: $query) {
       id
       text
-
     }
   }
 `;
