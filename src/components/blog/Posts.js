@@ -15,7 +15,6 @@ class Posts extends Component {
                 query={GET_POSTS}
                 variables={{
                   query: search,
-                  orderBy: "createdAt_DESC"
                 }}
               >
                 {({ loading, error, data }) => {

@@ -11,7 +11,7 @@ const Post = ({ id, title, body, image, totalLikes }) => (
     <Link to={`/post/${id}`}>
       <div className="container">
         <h4> {title} </h4>
-        <p> {body} </p>
+        <h5> {body} </h5>
         <p>Total likes: {totalLikes}</p>
       </div>
     </Link>

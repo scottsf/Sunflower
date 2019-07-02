@@ -35,8 +35,8 @@ export const GET_USERS = gql`
 `;
 
 export const GET_POSTS = gql`
-  query($query: String!, $orderBy: PostOrderByInput) {
-    posts(query: $query, orderBy: $orderBy) {
+  query($query: String!) {
+    posts(query: $query, orderBy: createdAt_DESC) {
       id
       title
       body

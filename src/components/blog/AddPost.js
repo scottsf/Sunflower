@@ -39,12 +39,12 @@ class AddPost extends Component {
         className="form"
         mutation={CREATE_POST}
         variables={{ data: { ...this.state } }}
-        refetchQueries={() => [
-          {
-            query: GET_MY_POSTS,
-            variables: { search: "" }
-          }
-        ]}
+        // refetchQueries={() => [
+        //   {
+        //     query: GET_MY_POSTS,
+        //     variables: { search: "" }
+        //   }
+        // ]}
         update={(cache, { data: { createPost } }) => {
           const { posts } = cache.readQuery({
             query: GET_POSTS,

@@ -3,7 +3,7 @@ import Post from "../blog/Post";
 import { Redirect } from 'react-router-dom'
 
 const Favorite = ({ session }) => {
-    if (!session || !session.me) return <Redirect to="/" />
+    // if (!session || !session.me) return <Redirect to="/" />
   return (
     <Fragment>
       <h4>Favorite posts</h4>
