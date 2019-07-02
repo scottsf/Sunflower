@@ -22,4 +22,4 @@ const UploadOneFile = () => (
   </Mutation>
 );
 
-export default UploadOneFile;
+export { UploadOneFile as default }

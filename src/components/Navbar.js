@@ -33,6 +33,9 @@ const NavbarAuth = ({ session }) => (
             <NavLink to="/profile">Profile</NavLink>
           </li>
           <li>
+            <NavLink to="/favorite">Favorite</NavLink>
+          </li>
+          <li>
             <input
               type="text"
               placeholder="Search post"

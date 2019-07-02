@@ -13,6 +13,7 @@ import Search from "./components/blog/Search";
 import AddPost from "./components/blog/AddPost";
 import PostPage from "./components/blog/PostPage";
 import Profile from "./components/profile/Profile";
+import Favorite from './components/blog/Favorite';
 import withSession from "./components/withSession";
 
 import { ApolloClient } from "apollo-client";
@@ -152,6 +153,11 @@ const Root = ({ refetch, session }) => (
           <Route
             path="/profile"
             render={props => <Profile session={session} />}
+          />
+
+          <Route
+            path="/favorite"
+            render={props => <Favorite session={session} />}
           />
 
           <Redirect to="/" />
