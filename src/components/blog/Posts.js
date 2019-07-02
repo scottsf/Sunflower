@@ -14,7 +14,7 @@ class Posts extends Component {
               <Query
                 query={GET_POSTS}
                 variables={{
-                  query: search,
+                  query: search
                 }}
               >
                 {({ loading, error, data }) => {

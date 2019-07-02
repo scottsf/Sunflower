@@ -23,7 +23,7 @@ class AddPost extends Component {
 
   uploadImage = async (file, uploadFile) => {
     const res = await uploadFile({ variables: { file } });
-    const image = res.data.uploadFile.filepath
+    const image = res.data.uploadFile.filepath;
     this.setState({ image });
   };
 
@@ -36,7 +36,6 @@ class AddPost extends Component {
   render() {
     return (
       <Mutation
-        className="form"
         mutation={CREATE_POST}
         variables={{ data: { ...this.state } }}
         // refetchQueries={() => [
@@ -62,7 +61,31 @@ class AddPost extends Component {
           console.log(data);
           if (data && !loading) return <Redirect to="/" />;
           return (
-            <form onSubmit={e => this.handleSubmit(e, createPost)}>
+            <form
+              className="form"
+              onSubmit={e => this.handleSubmit(e, createPost)}
+            >
+              <Mutation mutation={UPLOAD_FILE}>
+                {(uploadFile, { loading, error, data }) => {
+                  return (
+                    <input
+                      type="file"
+                      required
+                      placeholder="image"
+                      accept="image/png, image/jpeg"
+                      // style={{ height: "200px" }}
+                      onChange={({
+                        target: {
+                          validity,
+                          files: [file]
+                        }
+                      }) =>
+                        validity.valid && this.uploadImage(file, uploadFile)
+                      }
+                    />
+                  );
+                }}
+              </Mutation>
               <input
                 type="text"
                 name="title"
@@ -77,47 +100,34 @@ class AddPost extends Component {
                 placeholder="body"
                 onChange={this.handleInput}
               />
-              <Mutation mutation={UPLOAD_FILE}>
-                {(uploadFile, { loading, error, data }) => {
-                  return (
-                    <input
-                      type="file"
-                      required
-                      placeholder="image"
-                      accept="image/png, image/jpeg"
-                      style={{ height: "200px" }}
-                      onChange={({
-                        target: {
-                          validity,
-                          files: [file]
-                        }
-                      }) => validity.valid && this.uploadImage(file, uploadFile)}
-                    />
-                  );
-                }}
-              </Mutation>
-              <input
-                type="checkbox"
-                name="published"
-                checked={this.state.published}
-                placeholder="published"
-                onChange={() =>
-                  this.setState(prevState => ({
-                    published: !prevState.published
-                  }))
-                }
-              />
-              <input
-                type="checkbox"
-                name="disabled"
-                checked={this.state.disabled}
-                placeholder="disabled"
-                onChange={() =>
-                  this.setState(prevState => ({
-                    disabled: !prevState.disabled
-                  }))
-                }
-              />
+              <div>
+                <input
+                  type="checkbox"
+                  name="published"
+                  checked={this.state.published}
+                  placeholder="published"
+                  onChange={() =>
+                    this.setState(prevState => ({
+                      published: !prevState.published
+                    }))
+                  }
+                />
+                <label htmlFor="file">Publish your post</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disabled"
+                  checked={this.state.disabled}
+                  placeholder="disabled"
+                  onChange={() =>
+                    this.setState(prevState => ({
+                      disabled: !prevState.disabled
+                    }))
+                  }
+                />
+                <label>Disable comments</label>
+              </div>
               <button type="submit" className="button-primary">
                 Submit
               </button>
