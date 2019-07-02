@@ -21,7 +21,9 @@ import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 import { withClientState } from "apollo-link-state";
 import { ApolloLink, Observable } from "apollo-link";
-import { createUploadLink } from 'apollo-upload-client'
+import { createUploadLink } from "apollo-upload-client";
+
+import { SearchProvider } from "./context";
 
 // Migrated APOLLO-BOOST to APOLLO-CLIENT manually
 const cache = new InMemoryCache();
@@ -74,7 +76,7 @@ const client = new ApolloClient({
       resolvers: {
         Mutation: {
           updateNetworkStatus: (_, { isConnected }, { cache }) => {
-            cache.writeData({ data: { isConnected }});
+            cache.writeData({ data: { isConnected } });
             return null;
           }
         }
@@ -121,38 +123,40 @@ const client = new ApolloClient({
 const Root = ({ refetch, session }) => (
   <BrowserRouter>
     <div className="Page">
-      <Navbar session={session} />
-      <Switch>
-        <Route path="/" component={App} exact />
-        <Route path="/search" component={Search} />
-        <Route
-          path="/signin"
-          render={props => <Signin refetch={refetch} {...props} />}
-        />
-        <Route
-          path="/signup"
-          render={props => <Signup refetch={refetch} {...props} />}
-        />
-        <Route
-          path="/post/add"
-          render={props => (
-            <AddPost refetch={refetch} session={session} {...props} />
-          )}
-        />
-        <Route
-          path="/post/:id"
-          render={props => (
-            <PostPage refetch={refetch} session={session} {...props} />
-          )}
-        />
+      <SearchProvider>
+        <Navbar session={session} />
+        <Switch>
+          <Route path="/" component={App} exact />
+          <Route path="/search" component={Search} />
+          <Route
+            path="/signin"
+            render={props => <Signin refetch={refetch} {...props} />}
+          />
+          <Route
+            path="/signup"
+            render={props => <Signup refetch={refetch} {...props} />}
+          />
+          <Route
+            path="/post/add"
+            render={props => (
+              <AddPost refetch={refetch} session={session} {...props} />
+            )}
+          />
+          <Route
+            path="/post/:id"
+            render={props => (
+              <PostPage refetch={refetch} session={session} {...props} />
+            )}
+          />
 
-        <Route
-          path="/profile"
-          render={props => <Profile session={session} />}
-        />
+          <Route
+            path="/profile"
+            render={props => <Profile session={session} />}
+          />
 
-        <Redirect to="/" />
-      </Switch>
+          <Redirect to="/" />
+        </Switch>
+      </SearchProvider>
     </div>
   </BrowserRouter>
 );

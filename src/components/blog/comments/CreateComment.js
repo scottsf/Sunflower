@@ -55,7 +55,7 @@ class CreateComment extends Component {
                 placeholder="Write a comment"
                 onChange={this.handleComment}
               />
-              <button onClick={(e) => this.submit(e, createComment)}> Submit </button>
+              <button onClick={(e) => this.submit(e, createComment)}> Send </button>
             </Fragment>
           );
         }}
