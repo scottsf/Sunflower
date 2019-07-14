@@ -29,8 +29,10 @@ class AddPost extends Component {
 
   handleSubmit = async (e, createPost) => {
     e.preventDefault();
-    await createPost();
-    await this.props.refetch();
+    if (this.state.image) {
+      await createPost();
+      await this.props.refetch();
+    }
   };
 
   render() {

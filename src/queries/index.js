@@ -90,7 +90,12 @@ export const GET_COMMENTS = gql`
   query($post_id: ID, $query: String) {
     comments(post_id: $post_id, query: $query) {
       id
-      text
+      text 
+      createdAt
+      author_id {
+        id
+        name
+      }
     }
   }
 `;

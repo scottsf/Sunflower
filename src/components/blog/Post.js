@@ -5,7 +5,8 @@ const Post = ({ id, title, body, image, totalLikes }) => (
   <li
     className="post"
     style={{
-      background: `url(${image}) center center / cover no-repeat`
+      background: `url(${image}) center center / cover no-repeat`,
+      // width: "50px"
     }}
   >
     <Link to={`/post/${id}`}>

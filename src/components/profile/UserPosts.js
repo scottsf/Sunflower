@@ -18,7 +18,7 @@ const UserPosts = () => (
       if (error) return `Error ${Error}`;
       console.log('DATA :', data)
       return (
-        <ul>
+        <ul className="myPosts">
           <h4>My posts</h4>
           {data.myPosts &&
             data.myPosts.map(post => (

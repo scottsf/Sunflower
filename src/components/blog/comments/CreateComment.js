@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Mutation } from "react-apollo";
 import { CREATE_COMMENT } from "../../../mutation/index";
 import { GET_COMMENTS } from '../../../queries/index'
+import { GET_POST } from '../../../queries/index'
 
 class CreateComment extends Component {
   state = { comment: "" };
@@ -16,7 +17,7 @@ class CreateComment extends Component {
   submit = async (e, createComment) => {
     e.preventDefault()
     await createComment()
-    this.props.refetch()
+    await this.props.refetch()
   }
 
   render() {
@@ -29,6 +30,9 @@ class CreateComment extends Component {
       <Mutation 
         mutation={CREATE_COMMENT} 
         variables={{ data }}
+        refetchQueries={() => [
+          { query: GET_POST, variables: { id: data.post_id } }
+        ]}
         update={(cache, { data: { createComment }}) => {
            const { comments } = cache.readQuery({
                query: GET_COMMENTS,
@@ -48,15 +52,24 @@ class CreateComment extends Component {
       > 
         {(createComment, { data, loading, error }) => {
           return (
-            <Fragment>
-              <input
-                name="comment"
-                value={this.state.comment}
-                placeholder="Write a comment"
-                onChange={this.handleComment}
-              />
-              <button onClick={(e) => this.submit(e, createComment)}> Send </button>
-            </Fragment>
+            <div className="createComment row">
+              <div className="seven columns">
+                <input
+                  name="comment"
+                  type="text"
+                  value={this.state.comment}
+                  placeholder="Write a comment"
+                  onChange={this.handleComment}
+                  className="u-full-width"
+                />
+              </div>
+
+              <div className="three columns">
+                <button onClick={e => this.submit(e, createComment)}>
+                  Send
+                </button>
+              </div>
+            </div>
           );
         }}
       </Mutation>

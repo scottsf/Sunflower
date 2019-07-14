@@ -5,21 +5,28 @@ import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 
 const Comments = ({ postId, refetch }) => (
-  <Query query={GET_COMMENTS} variables={{ post_id: postId }}>
+  <Fragment>
+    
+  <Query 
+    query={GET_COMMENTS} 
+    variables={{ post_id: postId }}
+  >
     {({ data, loading, error }) => {
       if (loading) return "Loading";
+      console.log(data)
       return (
         <Fragment>
-          <CreateComment postId={postId} refetch={refetch}/>
-          <ul>
+          <ul className="comments">
             {data.comments.map(comment => (
               <Comment key={comment.id} {...comment} />
             ))}
           </ul>
+          <CreateComment postId={postId} refetch={refetch}/>
         </Fragment>
       );
     }}
   </Query>
+  </Fragment>
 );
 
 export { Comments as default };

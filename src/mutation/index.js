@@ -72,6 +72,11 @@ export const CREATE_COMMENT = gql`
     createComment(data: $data) {
       id
       text
+      createdAt
+      author_id {
+        id
+        name
+      }
     }
   }
 
